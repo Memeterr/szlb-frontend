@@ -7,10 +7,14 @@ import {
   Scripts,
   ScrollRestoration,
 } from "react-router";
-import { Box, Code, ColorSchemeScript, Container, mantineHtmlProps, Text, Title } from "@mantine/core";
+import {Box, Code, ColorSchemeScript, Container, mantineHtmlProps, MantineProvider, Text, Title} from "@mantine/core";
 import type { Route } from "./+types/root";
 import "./app.css";
+import '@mantine/core/styles.css';
+import '@mantine/carousel/styles.css';
 import { AppTheme } from "~/app-theme";
+import {HeaderMenu} from "~/components/HeaderMenu";
+import {FooterLinks} from "~/components/FooterLinks";
 
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
@@ -22,11 +26,20 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Meta />
         <Links />
       </head>
+
       <body>
-        <AppTheme>{children}</AppTheme>
+        <MantineProvider>
+            <HeaderMenu />
+
+            <AppTheme>{children}</AppTheme>
+
+            <FooterLinks />
+        </MantineProvider>
+
         <ScrollRestoration />
         <Scripts />
       </body>
+
     </html>
   );
 }
