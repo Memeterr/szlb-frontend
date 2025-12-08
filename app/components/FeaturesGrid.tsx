@@ -1,4 +1,4 @@
-import { IconCookie, IconPlant2, IconTrees, IconFriends, IconScissors, IconGift } from '@tabler/icons-react';
+import { IconCookie, IconPlant2, IconTrees, IconFriends, IconPalette, IconGift } from '@tabler/icons-react';
 import { Container, SimpleGrid, Text, ThemeIcon, Title } from '@mantine/core';
 import classes from '~/styles/FeaturesGrid.module.css';
 
@@ -10,7 +10,7 @@ export const MOCKDATA = [
             'Szedd saját kezűleg a friss levendulát, és vigyél haza egy darabot a nyárból!',
     },
     {
-        icon: IconScissors,
+        icon: IconPalette,
         title: 'Kézműves foglalkozások',
         description:
             'Készíts levendulás illatzsákot, koszorút vagy szappant családoddal, barátaiddal.',

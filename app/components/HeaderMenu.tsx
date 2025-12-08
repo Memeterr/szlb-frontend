@@ -6,7 +6,10 @@ import {
     IconMoneybag,
     IconVaccineBottle,
     IconNotification,
-    IconMilk
+    IconShoppingBag,
+    IconTrash,
+    IconUser,
+    IconMilk, IconHeart
 } from '@tabler/icons-react';
 import {
     Anchor,
@@ -25,13 +28,16 @@ import {
     ThemeIcon,
     UnstyledButton,
     useMantineTheme,
-    Image
+    Image, ActionIcon, TextInput,
+    Popover, Table, NumberInput
 } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 // import { MantineLogo } from '@mantinex/mantine-logo';
 import classes from '~/styles/HeaderMenu.module.css';
 // import logoDark from '~/welcome/logo-light.svg'
 import logo from '~/images/logo.png'
+import {useState} from "react";
+import {AuthenticationTitle} from "~/components/AuthenticationTitle";
 
 const mockdata = [
     {
@@ -66,28 +72,121 @@ const mockdata = [
     },
 ];
 
+const mainLinksMockData = [
+    { link: '#', label: 'Kezdőlap' },
+    { link: '#', label: 'Levendulaszüret' },
+    { link: '#', label: 'Termékek' },
+    { link: '#', label: 'Programok' },
+    { link: '#', label: 'Rólunk' },
+]
+
 export function HeaderMenu() {
     const [drawerOpened, { toggle: toggleDrawer, close: closeDrawer }] = useDisclosure(false);
     const [linksOpened, { toggle: toggleLinks }] = useDisclosure(false);
+    const [active, setActive] = useState(0);
     const theme = useMantineTheme();
 
-    const links = mockdata.map((item) => (
-        <UnstyledButton className={classes.subLink} key={item.title}>
-            <Group wrap="nowrap" align="flex-start">
-                <ThemeIcon size={34} variant="default" radius="md">
-                    <item.icon size={22} color={"#a058d1"} />
-                </ThemeIcon>
-                <div>
-                    <Text size="sm" fw={500}>
-                        {item.title}
-                    </Text>
-                    <Text size="xs" c="dimmed">
-                        {item.description}
-                    </Text>
-                </div>
-            </Group>
-        </UnstyledButton>
-    ));
+    function renderLinks(mockData: any, index: any) {
+        return mockdata.map((item) => (
+            <UnstyledButton className={classes.subLink} key={item.title}
+                            data-active={index === active || undefined}
+                            onClick={(event) => {
+                                event.preventDefault();
+                                setActive(index);
+                            }}>
+                <Group wrap="nowrap" align="flex-start">
+                    <ThemeIcon size={34} variant="default" radius="md">
+                        <item.icon size={22} color={"#a058d1"} />
+                    </ThemeIcon>
+                    <div>
+                        <Text size="sm" fw={500}>
+                            {item.title}
+                        </Text>
+                        <Text size="xs" c="dimmed">
+                            {item.description}
+                        </Text>
+                    </div>
+                </Group>
+            </UnstyledButton>
+        ))
+    }
+
+    const mainLinks = mainLinksMockData.map((item, index) => (
+        item.label === "Termékek" ? (
+            <HoverCard key={item.label} width={600} position="bottom" radius="md" shadow="md" withinPortal>
+                <HoverCard.Target>
+                    <a href={item.link}
+                       className={classes.link}
+                       data-active={index === active || undefined}
+                       onClick={(event) => {
+                           event.preventDefault();
+                           setActive(index);
+                       }}>
+                        <Center inline>
+                            <Box component="span" mr={5}>
+                                {item.label}
+                            </Box>
+                            <IconChevronDown size={16} color={"#46106a"} />
+                        </Center>
+                    </a>
+                </HoverCard.Target>
+
+                <HoverCard.Dropdown style={{ overflow: 'hidden' }}>
+                    <Group justify="space-between" px="md">
+                        <Text fw={500}>Termékek</Text>
+                        <Anchor href={item.link} fz="xs"
+                                variant={"gradient"}
+                                gradient={{ from: '#a058d1', to: '#a058d1' }}
+                                data-active={index === active || undefined}
+                                onClick={(event) => {
+                                    event.preventDefault();
+                                    setActive(index);
+                                }}>
+                            Nézd meg az összeset
+                        </Anchor>
+                    </Group>
+
+                    <Divider my="sm" />
+
+                    <SimpleGrid cols={2} spacing={0}>
+                        {renderLinks(mockdata, index)}
+                    </SimpleGrid>
+
+                    <div className={classes.dropdownFooter}>
+                        <Group justify="space-between">
+                            <div>
+                                <Text fw={500} fz="sm">
+                                    Próbáld ki!
+                                </Text>
+                                <Text size="xs" c="dimmed">
+                                    Fedezd fel levendulás termékeinket és különleges ajánlatainkat a Webshopban!
+                                </Text>
+                            </div>
+                            <Button variant="outline" color={"#a058d1"}
+                                    data-active={index === active || undefined}
+                                    onClick={(event) => {
+                                        event.preventDefault();
+                                        setActive(index);}}>
+                                Irány a Webshop</Button>
+                        </Group>
+                    </div>
+                </HoverCard.Dropdown>
+            </HoverCard>
+        ) : (
+            <Anchor<'a'>
+                href={item.link}
+                key={item.label}
+                className={classes.link}
+                data-active={index === active || undefined}
+                onClick={(event) => {
+                    event.preventDefault();
+                    setActive(index);
+                }}
+            >
+                {item.label}
+            </Anchor>
+        )
+    ))
 
     return (
         <Box pb={60}>
@@ -100,90 +199,89 @@ export function HeaderMenu() {
                     />
 
                     <Group h="100%" gap={0} visibleFrom="sm">
-                        <a href="#" className={classes.link}>
-                            Kezdőlap
-                        </a>
-                        <a href="#" className={classes.link}>
-                            Levendulaszüret
-                        </a>
-                        <HoverCard width={600} position="bottom" radius="md" shadow="md" withinPortal>
-                            <HoverCard.Target>
-                                <a href="#" className={classes.link}>
-                                    <Center inline>
-                                        <Box component="span" mr={5}>
-                                            Termékek
-                                        </Box>
-                                        <IconChevronDown size={16} color={theme.colors.blue[6]} />
-                                    </Center>
-                                </a>
-                            </HoverCard.Target>
-
-                            <HoverCard.Dropdown style={{ overflow: 'hidden' }}>
-                                <Group justify="space-between" px="md">
-                                    <Text fw={500}>Termékek</Text>
-                                    <Anchor href="#" fz="xs">
-                                        Nézd meg az összeset
-                                    </Anchor>
-                                </Group>
-
-                                <Divider my="sm" />
-
-                                <SimpleGrid cols={2} spacing={0}>
-                                    {links}
-                                </SimpleGrid>
-
-                                <div className={classes.dropdownFooter}>
-                                    <Group justify="space-between">
-                                        <div>
-                                            <Text fw={500} fz="sm">
-                                                Próbáld ki!
-                                            </Text>
-                                            <Text size="xs" c="dimmed">
-                                                Fedezd fel levendulás termékeinket és különleges ajánlatainkat a Webshopban!
-                                            </Text>
-                                        </div>
-                                        <Button variant="outline" color={"#a058d1"}>Irány a Webshop</Button>
-                                    </Group>
-                                </div>
-                            </HoverCard.Dropdown>
-                        </HoverCard>
-                        <a href="#" className={classes.link}>
-                            Programok
-                        </a>
-                        <a href="#" className={classes.link}>
-                            Rólunk
-                        </a>
+                        {mainLinks}
                     </Group>
 
                     <Group visibleFrom="sm">
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="24"
-                            height="24"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="#000000"
-                            stroke-width="1.25"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                        >
-                            <path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" />
-                            <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
-                        </svg>
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="24"
-                            height="24"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="#000000"
-                            stroke-width="1.25"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                        >
-                            <path d="M6.331 8h11.339a2 2 0 0 1 1.977 2.304l-1.255 8.152a3 3 0 0 1 -2.966 2.544h-6.852a3 3 0 0 1 -2.965 -2.544l-1.255 -8.152a2 2 0 0 1 1.977 -2.304z" />
-                            <path d="M9 11v-5a3 3 0 0 1 6 0v5" />
-                        </svg>
+                        <Popover width={400} trapFocus position="bottom" withArrow shadow="md">
+                            <Popover.Target>
+                                <ActionIcon variant="light" size="xl" radius="lg" aria-label="Felhasználó" color={"#f8f2fa"}>
+                                    <IconUser color={"#46106a"} />
+                                </ActionIcon>
+                            </Popover.Target>
+                            <Popover.Dropdown>
+                                <AuthenticationTitle />
+                                {/*Belépés*/}
+                                {/*<TextInput label="Name" placeholder="Name" size="xs" />*/}
+                                {/*<TextInput label="Email" placeholder="john@doe.com" size="xs" mt="xs" />*/}
+                                {/*<Button variant="filled" color={"#a058d1"} radius={"lg"} mt={"sm"}>*/}
+                                {/*    Belép*/}
+                                {/*</Button>*/}
+                            </Popover.Dropdown>
+                        </Popover>
+
+                        <Popover width={450} trapFocus position="bottom" withArrow shadow="md">
+                            <Popover.Target>
+                                <ActionIcon variant="light" size="xl" radius="lg" aria-label="Kosár" color={"#f8f2fa"}>
+                                    <IconShoppingBag color="#46106a" />
+                                </ActionIcon>
+                            </Popover.Target>
+                            <Popover.Dropdown>
+                                <Text fw={700} size="lg" mb="sm">Kosár tartalma</Text>
+                                <Table>
+                                    <Table.Thead>
+                                        <Table.Tr>
+                                            <Table.Th>Termék</Table.Th>
+                                            <Table.Th style={{minWidth: "105px"}}>Mennyiség</Table.Th>
+                                            <Table.Th style={{minWidth: "80px"}}>Ár</Table.Th>
+                                            <Table.Th></Table.Th>
+                                        </Table.Tr>
+                                    </Table.Thead>
+                                    <Table.Tbody>
+                                        <Table.Tr>
+                                            <Table.Td>
+                                                <Group justify="flex-start" style={{flexWrap: 'nowrap'}}>
+                                                    <Image src="https://placehold.co/600x400" w={"auto"} h={40} radius="sm" />
+                                                    <Text size="sm">Levendula illatzsák</Text>
+                                                </Group>
+                                            </Table.Td>
+                                            <Table.Td>
+                                                <NumberInput
+                                                    variant="filled"
+                                                    size="xs"
+                                                    radius="xl"
+                                                    defaultValue={1}
+                                                    min={1}
+                                                    max={100}
+                                                    suffix=" db"
+                                                    style={{ width: 70 }}
+                                                />
+                                            </Table.Td>
+                                            <Table.Td>1000 Ft</Table.Td>
+                                            <Table.Td>
+                                                <ActionIcon variant="subtle" color="gray">
+                                                    <IconTrash size={20} color="var(--mantine-color-red-6)" stroke={1.5} />
+                                                </ActionIcon>
+                                            </Table.Td>
+                                        </Table.Tr>
+                                    </Table.Tbody>
+                                    <Table.Tfoot>
+                                        <Table.Tr>
+                                            <Table.Td colSpan={1}>
+                                                <Group justify="space-evenly">
+                                                    <Text fw={500}>Összesen:</Text>
+                                                    <Text fw={600}>1000 Ft</Text>
+                                                </Group>
+                                            </Table.Td>
+                                        </Table.Tr>
+                                    </Table.Tfoot>
+                                </Table>
+                                <Group mt="md">
+                                    <Button variant="default" color="gray" size="xs">Kosár ürítése</Button>
+                                    <Button color="grape" size="xs">Tovább a fizetéshez</Button>
+                                </Group>
+                            </Popover.Dropdown>
+                        </Popover>
 
                         {/*<Button variant="default">Log in</Button>*/}
                         {/*<Button>Sign up</Button>*/}
@@ -216,7 +314,7 @@ export function HeaderMenu() {
                             <IconChevronDown size={16} color={theme.colors.blue[6]} />
                         </Center>
                     </UnstyledButton>
-                    <Collapse in={linksOpened}>{links}</Collapse>
+                    <Collapse in={linksOpened}>{renderLinks(mockdata, null)}</Collapse>
                     <a href="#" className={classes.link}>
                         Learn
                     </a>

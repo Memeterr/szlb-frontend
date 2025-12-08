@@ -27,10 +27,10 @@ function ContactIcon({ icon: Icon, title, description, ...others }: ContactIconP
 }
 
 const MOCKDATA = [
-    { title: 'Email', description: 'hello@mantine.dev', icon: IconAt },
-    { title: 'Phone', description: '+49 (800) 335 35 35', icon: IconPhone },
-    { title: 'Address', description: '844 Morris Park avenue', icon: IconMapPin },
-    { title: 'Working hours', description: '8 a.m. – 11 p.m.', icon: IconSun },
+    { title: 'Email', description: 'hello@szarvasilevendulabirtok.hu', icon: IconAt },
+    { title: 'Telefon', description: '+36 20 999 8877', icon: IconPhone },
+    { title: 'Cím', description: '5540 Szarvas, Tanya II. 4/4', icon: IconMapPin },
+    { title: 'Nyitvatartás', description: '10:00 – 18:00', icon: IconSun },
 ];
 
 export function ContactIconsList() {

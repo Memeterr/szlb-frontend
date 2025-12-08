@@ -1,6 +1,21 @@
 .card {
     background-color: var(--mantine-color-body);
     max-width: 400px;
+    height: 430px;
+
+    @mixin hover {
+        z-index: 1;
+        transform: scale(1.01);
+        box-shadow: var(--mantine-shadow-md);
+        border-color: light-dark(var(--mantine-color-gray-2), var(--mantine-color-dark-5));
+    }
+}
+
+.button {
+    &:disabled,
+    &[data-disabled] {
+        background-color: transparent;
+    }
 }
 
 .title {

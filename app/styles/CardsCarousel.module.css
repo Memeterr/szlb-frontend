@@ -33,6 +33,15 @@
     background-color: #6c3483;
 }
 
+.controls {
+    /*width: 100%;*/
+}
+
+.viewport {
+    width: 90%;
+    margin: auto;
+}
+
 .category {
     color: var(--mantine-color-white);
     opacity: 0.7;

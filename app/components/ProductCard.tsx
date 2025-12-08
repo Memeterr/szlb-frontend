@@ -1,49 +1,73 @@
-import { IconBookmark, IconHeart, IconShare } from '@tabler/icons-react';
-import { ActionIcon, Avatar, Badge, Card, Group, Image, Text } from '@mantine/core';
+import { IconBookmark, IconHeart, IconCircleArrowUpRight, IconShoppingBag } from '@tabler/icons-react';
+import {ActionIcon, Avatar, Badge, Card, Group, Image, Text, ThemeIcon, Tooltip} from '@mantine/core';
+import { IconPackage, IconPackageOff } from '@tabler/icons-react';
 import classes from '~/styles/ProductCard.module.css';
 
-export function ProductCard() {
+type ProductCardProps = {
+    title: string;
+    category: string;
+    image: string;
+    description: string;
+}
+
+export function ProductCard({title, category, image, description} : ProductCardProps) {
     return (
         <Card withBorder padding="lg" radius="md" className={classes.card}>
             <Card.Section mb="sm">
                 <Image
-                    src="https://images.unsplash.com/photo-1477554193778-9562c28588c0?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=80"
-                    alt="Top 50 underrated plants for house decoration"
+                    src={image}
+                    alt="Termék"
                     height={180}
                 />
             </Card.Section>
 
-            <Badge variant="light">decorations</Badge>
-            <Text className={classes.title}>Top 50 underrated plants for house decoration</Text>
+            <Badge variant="light" color={"#a058d1"}>{category}</Badge>
+            <Text className={classes.title}>{title}</Text>
 
-            <Group mt="lg">
-                <Avatar
-                    src="https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-7.png"
-                    radius="sm"
-                />
-                <div>
-                    <Text fw={500}>Elsa Gardenowl</Text>
-                    <Text fz="xs" c="dimmed">
-                        posted 34 minutes ago
-                    </Text>
-                </div>
+            <Group mt="lg" mb={"lg"}>
+                <Text fz="xs" c="dimmed">
+                    {description}
+                </Text>
             </Group>
 
             <Card.Section className={classes.footer}>
                 <Group justify="space-between">
-                    <Text fz="xs" c="dimmed">
-                        733 people liked this
-                    </Text>
+                    <Group gap={2} align={"center"}>
+                        <ThemeIcon variant="white" color={category === "Szörp" ? "red" : "green"}>
+                            { category == "Szörp" ? (<IconPackageOff />) : (<IconPackage />) }
+                        </ThemeIcon>
+                        <Text fz="xs" c="dimmed">
+                            { category == "Szörp" ? "Elfogyott" : "Készleten" }
+                        </Text>
+                    </Group>
                     <Group gap={0}>
-                        <ActionIcon variant="subtle" color="gray">
-                            <IconHeart size={20} color="var(--mantine-color-red-6)" stroke={1.5} />
-                        </ActionIcon>
-                        <ActionIcon variant="subtle" color="gray">
-                            <IconBookmark size={20} color="var(--mantine-color-yellow-6)" stroke={1.5} />
-                        </ActionIcon>
-                        <ActionIcon variant="subtle" color="gray">
-                            <IconShare size={20} color="var(--mantine-color-blue-6)" stroke={1.5} />
-                        </ActionIcon>
+                        <Tooltip label="Hozzáadás kívánságlistához"
+                                 openDelay={400}
+                                 withArrow
+                                 color={"#c28fe4"}
+                        >
+                            <ActionIcon variant="subtle" color="gray">
+                                <IconHeart size={20} color="var(--mantine-color-red-6)" stroke={1.5} />
+                            </ActionIcon>
+                        </Tooltip>
+                        <Tooltip label="Hozzáadás kosárhoz"
+                                 openDelay={400}
+                                 withArrow
+                                 color={"#c28fe4"}
+                        >
+                            <ActionIcon variant="subtle" color="gray" className={classes.button} disabled={category == "Szörp"}>
+                                <IconShoppingBag size={20} color={category == "Szörp" ? "gray" : "var(--mantine-color-blue-6)"} stroke={1.5} />
+                            </ActionIcon>
+                        </Tooltip>
+                        <Tooltip label="Ugrás a termék oldalra"
+                                 openDelay={400}
+                                 withArrow
+                                 color={"#c28fe4"}
+                        >
+                            <ActionIcon variant="subtle" color="gray">
+                                <IconCircleArrowUpRight size={20} color="var(--mantine-color-yellow-6)" stroke={1.5} />
+                            </ActionIcon>
+                        </Tooltip>
                     </Group>
                 </Group>
             </Card.Section>

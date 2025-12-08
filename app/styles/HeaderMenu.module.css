@@ -15,7 +15,8 @@
     padding-left: var(--mantine-spacing-md);
     padding-right: var(--mantine-spacing-md);
 
-    border-bottom: 1px solid #736381;
+    border-bottom: 1px solid #4a3567;
+    /*border-bottom: 1px solid #736381;*/
 
 }
 
@@ -30,13 +31,24 @@
     font-weight: 500;
     font-size: var(--mantine-font-size-sm);
 
+    border-bottom: 2px solid transparent;
+    transition:
+            border-color 100ms ease,
+            color 100ms ease;
+
     @media (max-width: $mantine-breakpoint-sm) {
         height: 42px;
         width: 100%;
     }
 
     @mixin hover {
-        background-color: light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-6));
+        background-color: #9775ca;
+        text-decoration: none;
+    }
+
+    &[data-active] {
+        color: light-dark(var(--mantine-color-black), var(--mantine-color-white));
+        border-bottom-color: #4a3567;
     }
 }
 

@@ -12,7 +12,7 @@ interface CardProps {
 
 function Card({ image, title, category }: CardProps) {
     return (
-        <ProductCard />
+        <ProductCard title={title} category={category} image={image} description="Sample description" />
         // <Paper
         //     shadow="md"
         //     p="xl"
@@ -37,40 +37,34 @@ function Card({ image, title, category }: CardProps) {
 
 const data = [
     {
-        image:
-            'https://images.unsplash.com/photo-1508193638397-1c4234db14d8?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&q=80',
-        title: 'Best forests to visit in North America',
-        category: 'nature',
+        image: 'https://placehold.co/600x400',
+        title: 'Levendula Illatzsák',
+        category: 'Illatzsák',
     },
     {
-        image:
-            'https://images.unsplash.com/photo-1559494007-9f5847c49d94?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&q=80',
-        title: 'Hawaii beaches review: better than you think',
-        category: 'beach',
+        image: 'https://placehold.co/600x400',
+        title: 'Levendulás szörp',
+        category: 'Szörp',
     },
     {
-        image:
-            'https://images.unsplash.com/photo-1608481337062-4093bf3ed404?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&q=80',
-        title: 'Mountains at night: 12 best locations to enjoy the view',
-        category: 'nature',
+        image: 'https://placehold.co/600x400',
+        title: 'Levendulás eperlekvár',
+        category: 'Lekvár',
     },
     {
-        image:
-            'https://images.unsplash.com/photo-1507272931001-fc06c17e4f43?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&q=80',
-        title: 'Aurora in Norway: when to visit for best experience',
-        category: 'nature',
+        image: 'https://placehold.co/600x400',
+        title: 'Levendulás baracklekvár',
+        category: 'Lekvár',
     },
     {
-        image:
-            'https://images.unsplash.com/photo-1510798831971-661eb04b3739?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&q=80',
-        title: 'Best places to visit this winter',
-        category: 'tourism',
+        image: 'https://placehold.co/600x400',
+        title: 'Levendula olaj',
+        category: 'Olaj',
     },
     {
-        image:
-            'https://images.unsplash.com/photo-1582721478779-0ae163c05a60?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&q=80',
-        title: 'Active volcanos reviews: travel at your own risk',
-        category: 'nature',
+        image: 'https://placehold.co/600x400',
+        title: 'Mintás szempárna',
+        category: 'Szempárna',
     },
 ];
 
@@ -91,11 +85,14 @@ export function CardsCarousel() {
             <Carousel
                 slideSize="33.3333%"
                 slideGap={50}
-                controlsOffset="sm"
-                controlSize={35}
+                controlSize={34}
                 withIndicators={true}
                 emblaOptions={{ loop: true, align: 'start', slidesToScroll: mobile ? 1 : 2 }}
-                classNames={{ indicator: classes.indicator }}
+                classNames={{
+                    indicator: classes.indicator,
+                    controls: classes.controls,
+                    viewport: classes.viewport
+            }}
             >
                 {slides}
             </Carousel>

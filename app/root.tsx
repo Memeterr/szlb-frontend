@@ -15,6 +15,18 @@ import '@mantine/carousel/styles.css';
 import { AppTheme } from "~/app-theme";
 import {HeaderMenu} from "~/components/HeaderMenu";
 import {FooterLinks} from "~/components/FooterLinks";
+import { createTheme, Input } from '@mantine/core';
+import classes from '~/styles/Root.module.css';
+
+const theme = createTheme({
+    components: {
+        Input: Input.extend({
+            classNames: {
+                input: classes.input,
+            },
+        }),
+    },
+});
 
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
@@ -28,7 +40,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
       </head>
 
       <body>
-        <MantineProvider>
+        <MantineProvider theme={theme}>
             <HeaderMenu />
 
             <AppTheme>{children}</AppTheme>

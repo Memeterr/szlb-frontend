@@ -9,12 +9,12 @@ const data = [
     },
     {
         title: 'Egyedi termék',
-        stats: '37',
+        stats: '40+',
         description: 'Minden termékünk különös gondossággal, kézzel készült.',
     },
     {
         title: 'Ültetett palánta',
-        stats: '3,000',
+        stats: '3,000+',
         description: 'Összesen három fajta levendulával: angol, francia, fehér virágú.',
     },
 ];
