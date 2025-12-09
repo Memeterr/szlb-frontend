@@ -41,11 +41,15 @@ export function Layout({ children }: { children: React.ReactNode }) {
 
       <body>
         <MantineProvider theme={theme}>
+
             <HeaderMenu />
 
-            <AppTheme>{children}</AppTheme>
+            <main>
+                <AppTheme>{children}</AppTheme>
+            </main>
 
             <FooterLinks />
+
         </MantineProvider>
 
         <ScrollRestoration />
