@@ -10,14 +10,43 @@ import {
     Divider,
     Fieldset,
     Checkbox,
-    Chip, ActionIcon, Button, Image, Switch, Select, Rating
+    Chip, ActionIcon, Button, Image, Switch, Select, Rating, type SelectProps
 } from '@mantine/core';
 import React from "react";
 import classes from "~/styles/FeaturesGrid.module.css";
 import {ProductCard} from "~/components/ProductCard";
-import {IconSquareX} from "@tabler/icons-react";
+import {
+    IconSquareX,
+    IconSortAscendingLetters,
+    IconSortDescendingLetters,
+    IconTrendingUp,
+    IconThumbUp, IconTrendingDown, IconCheck, IconFilter
+} from "@tabler/icons-react";
 import image from "~/images/creative_work2.png";
 import banner_image from "~/images/webshop_banner3.png";
+
+const iconProps = {
+    stroke: 1.5,
+    color: 'currentColor',
+    opacity: 0.6,
+    size: 18,
+};
+
+const icons: Record<string, React.ReactNode> = {
+    popularity: <IconThumbUp {...iconProps} />,
+    price_asc: <IconTrendingUp {...iconProps} />,
+    price_desc: <IconTrendingDown {...iconProps} />,
+    a_z_desc: <IconSortDescendingLetters {...iconProps} />,
+    a_z_asc: <IconSortAscendingLetters {...iconProps} />,
+};
+
+const renderSelectOption: SelectProps['renderOption'] = ({ option, checked }) => (
+    <Group flex="1" gap="xs">
+        {icons[option.value]}
+        {option.label}
+        {checked && <IconCheck style={{ marginInlineStart: 'auto' }} {...iconProps} />}
+    </Group>
+);
 
 export const products_mock = [
     {
@@ -96,14 +125,34 @@ export function ProductGrid() {
                 <Grid.Col span={9}>
                     <Grid.Col span={12} style={{height: "150px"}}>
                         {/*  TODO: add text above it - and generate better one */}
-                        <Image h={"100%"} w={"100%"} style={{objectFit: "cover"}} src={banner_image} alt="Banner" />
+                        <Group h={"100%"} justify="center" align={"center"}>
+                            <Title className={classes.title} fw={500} style={{
+                                position: "absolute",
+                                color: "black", // Change color for contrast
+                                textShadow: "0 2px 8px rgba(0,0,0,0.5)", // Optional: for better readability
+                                pointerEvents: "none", // Optional: allows clicks to pass through to image
+                            }}>
+                                Levendula Birtok Webshop
+                            </Title>
+                            <Image radius={"lg"} h={"100%"} w={"100%"} style={{objectFit: "cover"}} src={banner_image} alt="Banner" />
+                        </Group>
                     </Grid.Col>
                     <Grid.Col span={12}>
                         <Group align={"center"} justify={"flex-end"} pr={"sm"}>
                             <Select
                                 label="Rendezés"
                                 placeholder="Válassz"
-                                data={['Népszerűség', 'Olcsóbb', 'Drágább', 'A-z', 'Z-a']}
+                                leftSection={<IconFilter size={16} />} /* TODO: Display the selected icon  */
+                                data={[
+                                    { value: 'popularity', label: 'Népszerűség'},
+                                    { value: 'price_asc', label: 'Drágább'},
+                                    { value: 'price_desc', label: 'Olcsóbb'},
+                                    { value: 'a_z_asc', label: 'A-z'},
+                                    { value: 'a_z_desc', label: 'Z-a'},
+                                ]}
+                                defaultValue={"popularity"}
+                                checkIconPosition="right"
+                                renderOption={renderSelectOption}
                                 style={{maxWidth: "200px"}}
                             />
                         </Group>
@@ -123,10 +172,12 @@ export function ProductGrid() {
 
                             <Box p={"sm"} mb={"md"} style={{borderRadius: "15px", boxShadow: "0 1px 4px rgba(0,0,0,0.15)"}}>
                                 <Text fw={500} pb={"xs"}>Vásárlói értékelések</Text>
-                                <Group justify={"flex-start"} gap={10} pb={"md"}>
-                                    <Rating defaultValue={4} readOnly />
-                                    <Text size={"sm"}>4+</Text>
-                                </Group>
+                                <Switch pb={"md"} color={"#5c376e"} label={
+                                    <Group justify={"flex-start"} gap={10}>
+                                        <Rating defaultValue={4} readOnly />
+                                        <Text size={"sm"}>4+</Text>
+                                    </Group>
+                                } />
                             </Box>
 
                             <Box p={"sm"} style={{borderRadius: "15px", boxShadow: "0 1px 4px rgba(0,0,0,0.15)"}}>
@@ -138,14 +189,14 @@ export function ProductGrid() {
                                     <Chip color={"#a058d1"} variant="light" radius="md">Illatzsák</Chip>
                                     <Chip color={"#a058d1"} variant="light" radius="md">Szempárna</Chip>
                                 </Group>
-                                <Group justify={"flex-end"}>
-                                    <Button mt={"xs"} size={"xs"} leftSection={<IconSquareX size={16} />} variant="outline" color={"#534659"}>
-                                        Kiválasztás törlése
-                                    </Button>
-                                </Group>
                             </Box>
                         </Box>
-
+                        <Group justify={"flex-end"}>
+                            <Button size={"xs"} leftSection={<IconSquareX size={16} />} variant="outline"
+                                    color={"#534659"} fullWidth radius={"md"} mb={"sm"} mx={"md"}>
+                                Kiválasztott paraméterek törlése
+                            </Button>
+                        </Group>
                     </Box>
                 </Grid.Col>
                 <Grid.Col span={9}>

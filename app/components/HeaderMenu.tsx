@@ -278,7 +278,7 @@ export function HeaderMenu() {
                                 </Table>
                                 <Group mt="md">
                                     <Button variant="default" color="gray" size="xs">Kosár ürítése</Button>
-                                    <Button color="grape" size="xs">Tovább a fizetéshez</Button>
+                                    <Button color={"#a058d1"} size="xs">Tovább a fizetéshez</Button>
                                 </Group>
                             </Popover.Dropdown>
                         </Popover>

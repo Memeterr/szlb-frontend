@@ -33,7 +33,7 @@ export function AuthenticationTitle() {
                     </Anchor>
                 </Group>
                 <Button fullWidth mt="xl" radius="md" color={"#a058d1"}>
-                    Sign in
+                    Bejelentkezés
                 </Button>
             </Paper>
         </Container>
