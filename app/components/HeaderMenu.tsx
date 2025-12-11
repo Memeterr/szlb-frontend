@@ -259,8 +259,8 @@ export function HeaderMenu() {
                                             </Table.Td>
                                             <Table.Td>1000 Ft</Table.Td>
                                             <Table.Td>
-                                                <ActionIcon variant="subtle" color="gray">
-                                                    <IconTrash size={20} color="var(--mantine-color-red-6)" stroke={1.5} />
+                                                <ActionIcon variant="subtle" color="red">
+                                                    <IconTrash size={20}  stroke={1.5} />
                                                 </ActionIcon>
                                             </Table.Td>
                                         </Table.Tr>
