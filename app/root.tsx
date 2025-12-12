@@ -1,11 +1,11 @@
 import React from "react";
 import {
-  isRouteErrorResponse,
-  Links,
-  Meta,
-  Outlet,
-  Scripts,
-  ScrollRestoration,
+    isRouteErrorResponse,
+    Links,
+    Meta,
+    Outlet,
+    Scripts,
+    ScrollRestoration, useLocation,
 } from "react-router";
 import {Box, Code, ColorSchemeScript, Container, mantineHtmlProps, MantineProvider, Text, Title} from "@mantine/core";
 import type { Route } from "./+types/root";
@@ -19,6 +19,7 @@ import { createTheme, Input } from '@mantine/core';
 import classes from '~/styles/Root.module.css';
 
 const theme = createTheme({
+    cursorType: 'pointer',
     components: {
         Input: Input.extend({
             classNames: {
@@ -29,6 +30,12 @@ const theme = createTheme({
 });
 
 export function Layout({ children }: { children: React.ReactNode }) {
+    const location = useLocation();
+
+    // List of paths where you want to hide Header/Footer
+    const hideHeaderFooter = ['/rendeles'];
+    const shouldHide = hideHeaderFooter.includes(location.pathname);
+
   return (
     <html lang="en" {...mantineHtmlProps}>
       <head>
@@ -37,18 +44,19 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <ColorSchemeScript />
         <Meta />
         <Links />
+          <title>Szarvasi Levendula Birtok</title>
       </head>
 
       <body>
         <MantineProvider theme={theme}>
 
-            <HeaderMenu />
+            {!shouldHide && (<HeaderMenu />)}
 
             <main>
                 <AppTheme>{children}</AppTheme>
             </main>
 
-            <FooterLinks />
+            {!shouldHide && (<FooterLinks />)}
 
         </MantineProvider>
 

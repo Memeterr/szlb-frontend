@@ -39,7 +39,9 @@ export default function Checkout() {
         <Group gap={0} justify={"center"} align={"flex-start"} style={{flexGrow: 1, width: "100%"}}>
             <Box style={{ flex: 1, height: "100%" }}>
                 <Box pl={"320px"}>
-                    <OrderStepper />
+                    <Box p={"md"}>
+                        <OrderStepper />
+                    </Box>
                 </Box>
             </Box>
             <Divider orientation="vertical" />
@@ -52,7 +54,7 @@ export default function Checkout() {
                                     <Image src="https://placehold.co/600x400" w={"100%"} h={"100%"} radius="md" />
                                     <Badge circle radius={"md"} size={"md"} color="#a058d1" style={{position: "absolute", zIndex: 1, top: 0, right: 0}} >
                                         {item.quantity}
-                                    </Badge> {/* TODO: list shipping method as well with nice icon */}
+                                    </Badge>
                                 </Box>
                                 <Box h={"100%"} style={{width: "300px"}}>
                                     <Text fw={450} size={"sm"}>{item.title}</Text>
