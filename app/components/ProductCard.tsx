@@ -1,5 +1,5 @@
 import { IconBookmark, IconHeart, IconCircleArrowUpRight, IconShoppingBag } from '@tabler/icons-react';
-import {ActionIcon, Avatar, Badge, Button, Card, Group, Image, Text, ThemeIcon, Tooltip} from '@mantine/core';
+import {ActionIcon, Avatar, Badge, Button, Card, Group, Image, Rating, Text, ThemeIcon, Tooltip} from '@mantine/core';
 import { IconPackage, IconPackageOff } from '@tabler/icons-react';
 import classes from '~/styles/ProductCard.module.css';
 
@@ -30,7 +30,8 @@ export function ProductCard({title, category, image, description} : ProductCardP
                 </Text>
             </Group>
 
-            <Group justify="flex-end">
+            <Group justify="space-between">
+                <Rating value={3.5} fractions={2} readOnly />
                 <Group gap={0}>
                     <Tooltip label="Hozzáadás kívánságlistához"
                              openDelay={400}

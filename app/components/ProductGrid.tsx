@@ -10,7 +10,7 @@ import {
     Divider,
     Fieldset,
     Checkbox,
-    Chip, ActionIcon, Button, Image, Switch, Select, Rating, type SelectProps
+    Chip, ActionIcon, Button, Image, Switch, Select, Rating, type SelectProps, Flex
 } from '@mantine/core';
 import React from "react";
 import classes from "~/styles/FeaturesGrid.module.css";
@@ -20,7 +20,7 @@ import {
     IconSortAscendingLetters,
     IconSortDescendingLetters,
     IconTrendingUp,
-    IconThumbUp, IconTrendingDown, IconCheck, IconFilter
+    IconThumbUp, IconTrendingDown, IconCheck, IconFilter, IconStar, IconShoppingBag
 } from "@tabler/icons-react";
 import image from "~/images/creative_work2.png";
 import banner_image from "~/images/webshop_banner3.png";
@@ -34,10 +34,10 @@ const iconProps = {
 
 const icons: Record<string, React.ReactNode> = {
     popularity: <IconThumbUp {...iconProps} />,
+    bought_times: <IconShoppingBag {...iconProps} />,
     price_asc: <IconTrendingUp {...iconProps} />,
     price_desc: <IconTrendingDown {...iconProps} />,
-    a_z_desc: <IconSortDescendingLetters {...iconProps} />,
-    a_z_asc: <IconSortAscendingLetters {...iconProps} />,
+    stars: <IconStar {...iconProps} />,
 };
 
 const renderSelectOption: SelectProps['renderOption'] = ({ option, checked }) => (
@@ -144,11 +144,11 @@ export function ProductGrid() {
                                 placeholder="Válassz"
                                 leftSection={<IconFilter size={16} />} /* TODO: Display the selected icon  */
                                 data={[
-                                    { value: 'popularity', label: 'Népszerűség'},
-                                    { value: 'price_asc', label: 'Drágább'},
-                                    { value: 'price_desc', label: 'Olcsóbb'},
-                                    { value: 'a_z_asc', label: 'A-z'},
-                                    { value: 'a_z_desc', label: 'Z-a'},
+                                    { value: 'popularity', label: 'Ajánlott'},
+                                    { value: 'bought_times', label: 'Eladások alapján'},
+                                    { value: 'price_asc', label: 'Legolcsóbb elöl'},
+                                    { value: 'price_desc', label: 'Legdrágább elöl'},
+                                    { value: 'stars', label: 'Vélemények alapján'},
                                 ]}
                                 defaultValue={"popularity"}
                                 checkIconPosition="right"
@@ -192,7 +192,9 @@ export function ProductGrid() {
                             </Box>
                         </Box>
                         <Group justify={"flex-end"}>
-                            <Button size={"xs"} leftSection={<IconSquareX size={16} />} variant="outline"
+                            <Button size={"xs"}
+                                    // leftSection={<IconSquareX size={16} />}
+                                    variant="outline"
                                     color={"#534659"} fullWidth radius={"md"} mb={"sm"} mx={"md"}>
                                 Kiválasztott paraméterek törlése
                             </Button>
@@ -213,10 +215,23 @@ export function ProductGrid() {
                                 </Box>
                             </Grid.Col>
                         ))}
-                        <Grid.Col span={12}>
+                        <Grid.Col span={12} style={{ position: 'relative'}} >
                             <Group align={"center"} justify={"center"} >
                                 <Pagination total={3} siblings={2} boundaries={2} defaultValue={1} withEdges color={"#caa0ff"} />
                             </Group>
+                            <Text
+                                c={"dimmed"}
+                                size="xs"
+                                style={{
+                                    position: 'absolute',
+                                    right: 0,
+                                    bottom: 0
+                                }}
+                                pr={"xl"}
+                                pb={"xs"}
+                            >
+                                1 – 12 / 14 termék
+                            </Text>
                         </Grid.Col>
                     </Grid>
                     {/*<Skeleton height={"10rem"} radius="md" animate={false} />*/}
